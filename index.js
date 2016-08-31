@@ -155,6 +155,12 @@ app.get('*', function (req, res) {
     return
   }
 
+  // tmp for google
+  if (sanitizedPath == '/') {
+    res.redirect(301, "https://www.dobt.co/")
+    return
+  }
+
   for (i in oldPaths) {
     if (
       (sanitizedPath == ("/" + oldPaths[i]).toLowerCase()) ||
