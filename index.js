@@ -157,7 +157,8 @@ app.get('*', function (req, res) {
                   // The new blog paths no longer contain the date
                   replace(/[0-9]{4}\/[0-9]{2}\/[0-9]{2}/, '').
                   // Strip index.html
-                  replace(/\.index.html$/, '')
+                  replace(/\.index.html$/, '').
+                  toLowerCase()
 
       // Add a trailing slash
       if (!newPath.match(/\/$/)) {
@@ -168,7 +169,6 @@ app.get('*', function (req, res) {
       if (!newPath.match(/^\//)) {
         newPath = '/' + newPath
       }
-
 
       console.log("Redirecting " + req.path + ' to ' + newPath);
       res.redirect(301, "https://www.dobt.co/blog" + newPath)
