@@ -146,11 +146,20 @@ var oldPaths = [
 ]
 
 app.get('*', function (req, res) {
+  // Replace double-slash at end
+  var sanitizedPath = req.path.toLowerCase().replace(/\/\/$/, '/')
+
+  // Redirect the Atom feed
+  if ((sanitizedPath == '/feed.xml') || (sanitizedPath == '/feed')) {
+    res.redirect(301, "https://www.dobt.co/blog/feed.xml")
+    return
+  }
+
   for (i in oldPaths) {
     if (
-      (req.path.toLowerCase() == ("/" + oldPaths[i]).toLowerCase()) ||
-      (req.path.toLowerCase() == ("/" + oldPaths[i] + "/").toLowerCase()) ||
-      (req.path.toLowerCase() == ("/" + oldPaths[i] + "/index.html").toLowerCase())
+      (sanitizedPath == ("/" + oldPaths[i]).toLowerCase()) ||
+      (sanitizedPath == ("/" + oldPaths[i] + "/").toLowerCase()) ||
+      (sanitizedPath == ("/" + oldPaths[i] + "/index.html").toLowerCase())
     ) {
 
       newPath = oldPaths[i].
